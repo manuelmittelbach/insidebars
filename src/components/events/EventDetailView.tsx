@@ -111,7 +111,9 @@ export default function EventDetailView({
   const isCanceled = event.status === "canceled";
   // Standard external link — plain <a target="_blank">; let the OS decide
   // whether to hand off to the Maps app or open the web.
-  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.address || event.venue)}`;
+  // Include the venue name so Maps lands on the business listing, not just a
+  // pin on the street address.
+  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([event.venue, event.address].filter(Boolean).join(", "))}`;
   const canceledLabel = event.canceledBy === "admin" ? "Canceled" : "Canceled by the organizer";
 
   // Strip € from price text since the Euro icon already conveys it.

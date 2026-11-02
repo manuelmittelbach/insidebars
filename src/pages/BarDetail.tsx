@@ -89,7 +89,9 @@ export default function BarDetail() {
   const cleanAddress = venue.address.replace(/,\s*(Germany|Deutschland)\s*$/i, "");
   // Standard external link — plain <a target="_blank">; let the OS decide
   // whether to hand off to the Maps app or open the web.
-  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(venue.address || venue.name)}`;
+  // Include the venue name so Maps lands on the business listing, not just a
+  // pin on the street address.
+  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([venue.name, venue.address].filter(Boolean).join(", "))}`;
   // Share — mirrors EventDetail's handler. Native iOS routes through
   // Capacitor's Share plugin (real UIActivityViewController), web uses
   // navigator.share when available, and everything else falls back to
